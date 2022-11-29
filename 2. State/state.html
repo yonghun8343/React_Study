@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <div id="root"></div>
+  </body>
+  <script
+    crossorigin
+    src="https://unpkg.com/react@18/umd/react.development.js"
+  ></script>
+  <script
+    crossorigin
+    src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+  ></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const root = document.getElementById("root");
+    const App = () => {
+      const data = React.useState(0);
+      console.log(data);
+      const [counter, change] = data;
+      function add() {
+        change(counter + 1);
+      }
+      return (
+        <div>
+          <span>클릭: {counter}</span>
+          <button style={{ color: "red" }} onClick={add}>
+            클릭
+          </button>
+        </div>
+      );
+    };
+
+    // const Span = () => {
+    //   const data = React.useState(0);
+    //   console.log(data);
+    //   const [counter, change] = data;
+    //   return <span>클릭: {counter}</span>;
+    // };
+
+    // function add() {
+    //   change(counter + 1);
+    // }
+    // const Btn = () => (
+    //   <button style={{ color: "red" }} onClick={add}>
+    //     클릭
+    //   </button>
+    // );
+    // const Container = () => (
+    //   <div>
+    //     <Span />
+    //     <Btn />
+    //   </div>
+    // );
+    ReactDOM.render(<App />, root);
+  </script>
+</html>
