@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <div id="root"></div>
+  </body>
+  <script
+    crossorigin
+    src="https://unpkg.com/react@18/umd/react.development.js"
+  ></script>
+  <script
+    crossorigin
+    src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+  ></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+  <script type="text/babel">
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+
+    function Userinfo(props) {
+      return (
+        <div className="UserInfo">
+          <h1 className="work">{props.author.work}</h1>
+          <h2 className="UserInfo-name">{props.author.name}</h2>
+        </div>
+      );
+    }
+
+    function Comment(props) {
+      return (
+        <div className="Comment">
+          <Userinfo author={props.author} />
+          <div className="Comment-text">{props.text}</div>
+          <div className="Comment-date">{formatDate(props.date)}</div>
+        </div>
+      );
+    }
+
+    Comment.defaultProps = {
+      text: "기본값이 들어갔습니다. 값을 확인 해 주세요.",
+    };
+
+    Comment.propTypes = {
+      text: PropTypes.string.isRequired, // text는 props 타입을 문자열로 설정
+    };
+
+    const comment = {
+      date: new Date(),
+      text: "5",
+      author: {
+        name: "hun",
+        work: "효성직업전문학원",
+      },
+    };
+
+    function formatDate(date) {
+      return date.toLocaleDateString();
+    }
+
+    root.render(<Comment date={comment.date} author={comment.author} />);
+  </script>
+</html>

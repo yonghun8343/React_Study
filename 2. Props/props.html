@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <div id="root"></div>
+  </body>
+  <script
+    crossorigin
+    src="https://unpkg.com/react@18/umd/react.development.js"
+  ></script>
+  <script
+    crossorigin
+    src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+  ></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    function H1(props) {
+      return <h1>Hello, {props.name}!</h1>;
+    }
+
+    function tick() {
+      const element = (
+        <div>
+          <H1 name="대한민국" />
+          <h2>It is {new Date().toLocaleTimeString()}.</h2>
+        </div>
+      );
+      root.render(element);
+    }
+
+    setInterval(tick, 1000);
+  </script>
+</html>

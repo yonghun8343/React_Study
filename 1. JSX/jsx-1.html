@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <div id="root"></div>
+  </body>
+  <script
+    crossorigin
+    src="https://unpkg.com/react@18/umd/react.development.js"
+  ></script>
+  <script
+    crossorigin
+    src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+  ></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const root = document.getElementById("root");
+    const Span = () => <span>글자</span>;
+    function click() {
+      console.log("클릭");
+    }
+
+    const Btn = () => (
+      <button style={{ color: "red" }} onClick={click}>
+        클릭
+      </button>
+    );
+    const Container = () => (
+      <React.Fragment>
+        <Span />
+        <Btn />
+      </React.Fragment>
+    );
+    ReactDOM.render(<Container />, root);
+  </script>
+</html>
