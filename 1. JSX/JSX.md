@@ -42,8 +42,14 @@ React를 하는데 뜬금 없이 JSX가 나와서 당황하셨을 겁니다.
 > react.html
 
 ```
-<script crossorigin src="https://unpkg.com/ react@18/umd/react.development.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script
+    crossorigin
+    src="https://unpkg.com/react@18/umd/react.development.js"
+  ></script>
+  <script
+    crossorigin
+    src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+  ></script>
 위의 코드를 불러 와 줍니다.
 
 <span id="text">글자</span>
