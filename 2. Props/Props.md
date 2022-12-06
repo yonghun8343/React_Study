@@ -119,7 +119,112 @@ props-exp1.html고 아래의 내용을 넣어 봅시다.
 
 이 코드에서 userInfo의 코드를 컴포넌트로 묶어서 표현 하는 것을 props-exp2.html에서 작업 해 봅시다.
 
+우선 코드를 아래와 같이 입력 해 줍니다.
+
 > props-exp2.html
+
+```
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <div id="root"></div>
+  </body>
+  <script
+    crossorigin
+    src="https://unpkg.com/react@18/umd/react.development.js"
+  ></script>
+  <script
+    crossorigin
+    src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+  ></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+
+    function Userinfo(props) {
+      return (
+        <div className="UserInfo">
+          <h1 className="work">효성직업전문학원</h1>
+          <h2 className="UserInfo-name">hun</h2>
+        </div>
+      );
+    }
+
+    function Comment(props) {
+      return (
+        <div className="Comment">
+          <Userinfo author={props.author} />
+          <div className="Comment-text">리액트 Props 테스트 입니다.</div>
+          <div className="Comment-date">{formatDate(new Date())}</div>
+        </div>
+      );
+    }
+
+    function formatDate(date) {
+      return date.toLocaleDateString();
+    }
+
+    root.render(
+      <Comment/>
+    );
+  </script>
+</html>
+```
+
+이렇게 코드를 작성 했을 때에는 기존과는 다르지 않은 방식으로 코드를 구현 하였습니다. 그렇다면 우리가 별도의 값으로 빼서 props를 이용하여 데이터를 줄 수 있을까요?
+
+우리는 텍스트 정보들을 comment라는 변수명을 가진 Object에 넣어서 값을 이용해 보려고 합니다.
+
+우선 function Comment() 의 밑에 아래의 코드를 넣어 주세요
+
+```
+const comment = {
+  date: new Date(),
+  text: "리액트 Props 테스트 입니다.",
+  author: {
+    name: "hun",
+    work: "효성직업전문학원",
+  },
+};
+```
+
+오브젝트로 우리가 텍스트로 넣은 정보들을 따로 모아줬습니다. 그리고 나서 우리가 이 정보를 Props로 전달 해 주기 위해 root.render()부분을 수정 해 주려고 합니다.
+
+```
+root.render(
+  <Comment
+    date={comment.date}
+    text={comment.text}
+    author={comment.author}
+  />
+);
+```
+
+자 이제 이렇게 되면 function Comment(props) {} 함수에 props로 리액트가 comment라는 변수 명을 가진 object를 전달 해 줍니다.
+그러므로 우리는 props로 받은 값을 들어갈 위치에 넣어주면 적용이 끝나게 됩니다.
+
+```
+    function Userinfo(props) {
+      return (
+        <div className="UserInfo">
+          <h1 className="work">{props.author.work}</h1>
+          <h2 className="UserInfo-name">{props.author.name}</h2>
+        </div>
+      );
+    }
+
+    function Comment(props) {
+      return (
+        <div className="Comment">
+          <Userinfo author={props.author} />
+          <div className="Comment-text">{props.text}</div>
+          <div className="Comment-date">{formatDate(props.date)}</div>
+        </div>
+      );
+    }
+```
+
+아래는 수정이 끝난 최종 코드 입니다.
 
 ```
 <!DOCTYPE html>
