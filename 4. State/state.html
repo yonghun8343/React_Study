@@ -19,9 +19,9 @@
       console.log(data);
       const [counter, change] = data;
       function add() {
-        change(counter + 1);
+        // change(counter + 1);
         // 더 안전한건 아래의 코드
-        // change((current) => counter + 1);
+        change((current) => current + 1);
       }
       return (
         <div>
