@@ -14,7 +14,7 @@ Props는 부모에서 자식으로 값을 전달 해 주기 때문에 자식에�
 
 > state.html
 
-``` javascript
+```javascript
 const root = document.getElementById("root");
 let counter = 0;
 const Span = () => <span>클릭 {counter}</span>;
@@ -37,7 +37,7 @@ ReactDOM.render(<Container />, root);
 
 > state.html
 
-``` javascript
+```javascript
 const root = document.getElementById("root");
 let counter = 0;
 const Span = () => <span>클릭 {counter}</span>;
@@ -45,7 +45,11 @@ const Span = () => <span>클릭 {counter}</span>;
 function add() {
   counter = counter + 1;
 }
-const Btn = () => <button style={{ color: "red" }}>클릭</button>;
+const Btn = () => (
+  <button style={{ color: "red" }} onClick={add}>
+    클릭
+  </button>
+);
 const Container = () => (
   <div>
     <Span />
@@ -69,7 +73,7 @@ ReactDOM.render(<Container />, root);
 
 그러므로 add의 코드를 다음과 같이 바꾸어 줍시다.
 
-``` javascript
+```javascript
 function add() {
   counter = counter + 1;
   ReactDOM.render(<Container />, root);
@@ -90,15 +94,14 @@ function add() {
 
 우선 아래의 코드를 script에 넣어주세요.
 
-> > state.html
+> state.html
 
-``` javascript
+```javascript
 const root = document.getElementById("root");
 let counter = 0;
 const Span = () => {
-  const data = React.useState()
-  console.log(data)
-  (<span>클릭: {counter}</span>);
+  const data = React.useState();
+  console.log(data)(<span>클릭: {counter}</span>);
 };
 
 function add() {
@@ -139,12 +142,12 @@ ReactDOM.render(<Container />, root);
 
 여기서 비구조화 할당을 이용하여 배열을 변수에 담아보겠습니다.
 
-``` javascript
-const v1 = data[0]
-const v2 = data[1]
+```javascript
+const v1 = data[0];
+const v2 = data[1];
 
 // 위와 아래는 같은 코드이다.
-const [v1, v2] = data
+const [v1, v2] = data;
 ```
 
 여기서 아까 첫번째가 우리가 설정한 state값이고, 두번째가 state를 바꾸어 주는 함수라고 설명 했습니다.
@@ -153,7 +156,7 @@ const [v1, v2] = data
 
 > > state.html
 
-``` javascript
+```javascript
 const root = document.getElementById("root");
 const App = () => {
   const data = React.useState(0);
@@ -171,7 +174,7 @@ const App = () => {
     </div>
   );
 };
-ReactDOM.render(<Container />, root);
+ReactDOM.render(<App />, root);
 ```
 
 이 코드로 바꾸고 add 함수에 change를 넣어 counter + 1을 해 주게 되면 data의 값이 변경이 되면서 자동으로 리렌더링이 되는것을 볼 수 있습니다!
@@ -184,23 +187,23 @@ ReactDOM.render(<Container />, root);
 
 아래의 코드는 function add()안의 코드를 수정 해 주시면 됩니다.
 
-``` javascript
+```javascript
 // 현재 값을 받아와서 현재값에 + 1을 해 주는 방식
-change((current) => current + 1)
+change((current) => current + 1);
 ```
 
 최종 코드는 다음과 같습니다.
 
 > state.html
 
-``` javascript
+```javascript
 const root = document.getElementById("root");
 const App = () => {
   const data = React.useState(0);
   console.log(data);
   const [counter, change] = data;
   function add() {
-    change((current) => current + 1)
+    change((current) => current + 1);
   }
   return (
     <div>
@@ -211,14 +214,14 @@ const App = () => {
     </div>
   );
 };
-ReactDOM.render(<Container />, root);
+ReactDOM.render(<App />, root);
 ```
 
 이제 해당 코드를 Javascript의 class로 바꾸어 봅시다.
 
 > state-class.html
 
-``` javascript
+```javascript
 const root = document.getElementById("root");
 
 class App extends React.Component {
@@ -229,7 +232,8 @@ class App extends React.Component {
     };
   }
 
-  add = () => { // 클래스 내 함수 정식 선언은 아닙니다.
+  add = () => {
+    // 클래스 내 함수 정식 선언은 아닙니다.
     this.setState({ counter: this.state.counter + 1 });
   };
 
@@ -259,7 +263,7 @@ ReactDOM.render(<App />, root);
 
 > state-clock.html
 
-``` javascript
+```javascript
 <!DOCTYPE html>
 <html lang="en">
   <body>
@@ -300,7 +304,7 @@ ReactDOM.render(<App />, root);
 
 > state-clock.html
 
-``` javascript
+```javascript
 function H1(props) {
   return <h1>Hello, {props.name}!</h1>;
 }
@@ -328,14 +332,15 @@ tick을 사용하는 것이 아니라 재활용하기 좋도록 tick을 Clock �
 
 > state-clock.html
 
-``` javascript
+```javascript
 function tick() {
-  const element = ( // class로 변경
-    <div>
-      <H1 name="대한민국" />
-      <h2>It is {new Date().toLocaleTimeString()}.</h2>
-    </div>
-  );
+  const element = // class로 변경
+    (
+      <div>
+        <H1 name="대한민국" />
+        <h2>It is {new Date().toLocaleTimeString()}.</h2>
+      </div>
+    );
   root.render(element);
 }
 
@@ -361,7 +366,7 @@ setInterval(tick, 1000);
 
 자 이제 Clock 함수 컴포넌트를 클래스 컴포넌트로 바꾸어 봅시다.
 
-``` javascript
+```javascript
 1. React.Component를 확장하는 동일한 이름의 ES6 class를 생성합니다.
 2. render()라고 불리는 빈 메서드를 추가합니다.
 3. 함수의 내용을 render() 메서드 안으로 옮깁니다.
@@ -388,9 +393,10 @@ class Tick extends React.Component {
 
 > state-clock.html
 
-``` javascript
+```javascript
 class Tick extends React.Component {
-  constructor(props) { // 두번째 constructor를 통해 부모 props 호출 및 state 추가
+  constructor(props) {
+    // 두번째 constructor를 통해 부모 props 호출 및 state 추가
     super(props);
     this.state = {
       date: new Date(),
@@ -401,7 +407,8 @@ class Tick extends React.Component {
     return (
       <div>
         <H1 name="대한민국" />
-        <h2>It is {this.state.date.toLocaleTimeString()}.</h2> // 첫번째 수정 this.props => this.state
+        <h2>It is {this.state.date.toLocaleTimeString()}.</h2> // 첫번째 수정 this.props
+        => this.state
       </div>
     );
   }
@@ -416,7 +423,7 @@ root.render(<Tick />);
 
 > state-clock.html
 
-``` javascript
+```javascript
 <!DOCTYPE html>
 <html lang="en">
   <body>
@@ -486,13 +493,14 @@ root.render(<Tick />);
 리액트의 생명주기는 다음과 같습니다.
 
 ![생명주기](./%EC%A0%9C%EB%AA%A9%20%EC%97%86%EC%9D%8C.png)
+
 - 출처 : https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/
 
 여기서는 마운팅(처음 DOM에 렌더링 됨)과 언마운팅(생성된 DOM이 삭제 될 때)을 사용 해 보려 합니다.
 
 컴포넌트 클래스에서 특별한 메서드를 선언하여 컴포넌트가 마운트되거나 언마운트 될 때 일부 코드를 작동할 수 있습니다.
 
-``` javascript
+```javascript
 class Tick extends React.Component {
   constructor(props) {
     // 두번째 constructor를 통해 부모 props 호출 및 state 추가
@@ -502,15 +510,13 @@ class Tick extends React.Component {
     };
   }
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
-  componentWillUnmount() {
-  }
+  componentWillUnmount() {}
 
   tick() {
     this.setState({
-      date: new Date()
+      date: new Date(),
     });
   }
 
@@ -530,7 +536,7 @@ class Tick extends React.Component {
 
 `componentDidMount()` 메서드는 컴포넌트 출력물이 DOM에 렌더링 된 후에 실행됩니다. 이 장소가 타이머를 설정하기에 좋은 장소입니다.
 
-``` javascript
+```javascript
 componentDidMount() {
   this.timerID = setInterval(
     () => this.tick(),
@@ -545,7 +551,7 @@ this.props가 React에 의해 스스로 설정되고 this.state가 특수한 의
 
 componentWillUnmount() 생명주기 메서드 안에 있는 타이머를 분해해 보겠습니다.
 
-``` javascript
+```javascript
 componentWillUnmount() {
   clearInterval(this.timerID);
 }
@@ -553,7 +559,7 @@ componentWillUnmount() {
 
 최종 코드는 다음과 같습니다.
 
-``` javascript
+```javascript
 <!DOCTYPE html>
 <html lang="en">
   <body>
@@ -636,16 +642,16 @@ componentWillUnmount() {
 
 예를 들어, 이 코드는 컴포넌트를 다시 렌더링하지 않습니다.
 
-``` javascript
+```javascript
 // Wrong
-this.state.comment = 'Hello';
+this.state.comment = "Hello";
 ```
 
 대신에 setState()를 사용합니다.
 
-``` javascript
+```javascript
 // Correct
-this.setState({comment: 'Hello'});
+this.setState({ comment: "Hello" });
 ```
 
 this.state를 지정할 수 있는 유일한 공간은 바로 constructor입니다.
@@ -656,7 +662,7 @@ this.props와 this.state가 비동기적으로 업데이트될 수 있기 때문
 
 예를 들어, 다음 코드는 카운터 업데이트에 실패할 수 있습니다.
 
-``` javascript
+```javascript
 // Wrong
 this.setState({
   counter: this.state.counter + this.props.increment,
@@ -665,19 +671,18 @@ this.setState({
 
 이를 수정하기 위해 객체보다는 함수를 인자로 사용하는 다른 형태의 setState()를 사용합니다. 그 함수는 이전 state를 첫 번째 인자로 받아들일 것이고, 업데이트가 적용된 시점의 props를 두 번째 인자로 받아들일 것입니다.
 
-``` javascript
+```javascript
 // Correct - 클래스 컴포넌트
 this.setState((state, props) => ({
-  counter: state.counter + props.increment
+  counter: state.counter + props.increment,
 }));
 
 // Correct - 함수 컴포넌트
-this.setState(function(state, props) {
+this.setState(function (state, props) {
   return {
-    counter: state.counter + props.increment
+    counter: state.counter + props.increment,
   };
 });
-
 ```
 
 해당 예제는 우리가 이전에 했던 `change((current) => current + 1)`에 대한 설명과 동일합니다.
@@ -688,7 +693,7 @@ setState()를 호출할 때 React는 제공한 객체를 현재 state로 병합�
 
 예를 들어, state는 다양한 독립적인 변수를 포함할 수 있습니다.
 
-``` javascript
+```javascript
 constructor(props) {
   super(props);
   this.state = {
@@ -700,7 +705,7 @@ constructor(props) {
 
 별도의 setState() 호출로 이러한 변수를 독립적으로 업데이트할 수 있습니다.
 
-``` javascript
+```javascript
   componentDidMount() {
     fetchPosts().then(response => { // posts를 수정 후 내용 저장할 때
       this.setState({ // 여기서 object에 posts 하나만 넣는 것 같지만 실제로는 해당 값만 수정이 된다.
@@ -722,11 +727,12 @@ constructor(props) {
 
 아래의 두 코드는 같은 코드입니다.
 
-``` javascript
+```javascript
 class Tick extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { // constructor 안에 state 사용
+    this.state = {
+      // constructor 안에 state 사용
       date: new Date(),
     };
   }
@@ -757,14 +763,15 @@ class Tick extends React.Component {
 }
 ```
 
-``` javascript
+```javascript
 class Tick extends React.Component {
   constructor(props) {
     // 두번째 constructor를 통해 부모 props 호출 및 state 추가
     super(props);
   }
 
-  state = { // state를 따로 빼서 사용
+  state = {
+    // state를 따로 빼서 사용
     date: new Date(),
   };
 
