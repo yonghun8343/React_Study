@@ -81,3 +81,176 @@ root.render(<ClientList clientList={array2} />);
 ```
 
 이제 key를 넣어 달라는 콘솔의 경고가 사라 졌습니다.
+
+참고로 key는 리액트에서 관리를 하기 때문에 function이라던지 클래스 내에서 관리가 됩니다. 그러므로 다른 function이나 class에서는 같은 id값이 사용되더라도 큰 지장은 없습니다.
+
+위의 코드를 조금 더 깔끔하게 가다듬어 봅시다.
+
+```javascript
+const root = ReactDOM.createRoot(document.getElementById("root"));
+const array = [1, 2, 3, 4, 5];
+function ListItem(props) {
+  return <li>{props.value}</li>;
+}
+
+function NumberLists(props) {
+  const number = props.number;
+  const listItem = number.map((value, index) => {
+    return <ListItem key={index} value="{value}" />;
+  });
+
+  return <ul>{listItem}</ul>;
+}
+
+root.render(<NumberLists number={array} />);
+```
+
+우리는 여기서 JSX안에 map을 넣을 수 있다는 것을 생각 해야합니다.
+
+이제 NumberLists함수에서 listItem 부분에 map을 넣어봅시다.
+
+```javascript
+const root = ReactDOM.createRoot(document.getElementById("root"));
+const array = [1, 2, 3, 4, 5];
+
+function ListItem(props) {
+  return <li>{props.value}</li>;
+}
+
+function NumberLists(props) {
+  const number = props.number;
+  return (
+    <ul>
+      {number.map((value, index) => {
+        return <ListItem key={index} value="{value}" />;
+      })}
+    </ul>
+  );
+}
+
+root.render(<NumberLists number={array} />);
+```
+
+자 이제 우리는 리스트로 된 데이터를 화면에 빠르고 간단한 코드로 구현 할 수 있게 되었습니다.
+
+이제 리스트를 추가하고 삭제하는 코드를 구현 해 봅시다.
+
+우선 위의 코드아래의 코드를 구현 후 각각을 설명 하겠습니다.
+
+> list.html
+
+```javascript
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <div id="root"></div>
+  </body>
+  <script
+    crossorigin
+    src="https://unpkg.com/react@18/umd/react.development.js"
+  ></script>
+  <script
+    crossorigin
+    src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+  ></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+
+    function AddArea(props) {
+      return (
+        <div>
+          <input value={props.value} onChange={props.onChange} />
+          <button onClick={props.onClick}>추가</button>
+        </div>
+      );
+    }
+
+    function ListItem(props) {
+      console.log(props);
+      return <li onDoubleClick={props.onDoubleClick}>{props.value}</li>;
+    }
+
+    function TextLists(props) {
+      const items = props.items;
+      return (
+        <ul>
+          {items.map((value, index) => {
+            return (
+              <li
+                key={index}
+                onDoubleClick={() => {
+                  props.onDoubleClick(index);
+                }}
+              >
+                {value}
+              </li>
+            );
+          })}
+        </ul>
+      );
+    }
+
+    class ListControl extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          list: [1, 2, 3],
+          value: "",
+        };
+      }
+
+      handleChange = (e) => {
+        this.setState({ value: e.target.value });
+      };
+
+      handleInsert = () => {
+        this.setState({
+          // list: this.state.list.concat(this.state.value),
+          list: [...this.state.list, this.state.value],
+          value: "",
+        });
+      };
+
+      handleRemove = (index) => {
+        const lists = this.state.list;
+        this.setState({
+          list: [
+            ...lists.slice(0, index),
+            ...lists.slice(index + 1, lists.length),
+          ],
+        });
+      };
+
+      render() {
+        return (
+          <React.Fragment>
+            <AddArea
+              value={this.state.value}
+              onChange={this.handleChange}
+              onClick={this.handleInsert}
+            />
+            <TextLists
+              items={this.state.list}
+              onDoubleClick={this.handleRemove}
+            />
+          </React.Fragment>
+        );
+      }
+    }
+
+    root.render(<ListControl />);
+  </script>
+</html>
+
+```
+
+위 코드에서 전체를 렌더링 하는 ListControl을 만들고 root에 렌더링합니다.
+
+그리고 별도의 div로 감싸주지 않기 위해 React.Fragment를 이용하였습니다.
+
+제일 처음 input과 button을 넣기 위해 AddArea를 만들어 줍니다. 그리고 하위 리스트를 출력하기 위한 TextLists를 만들어 줍니다.
+
+그 뒤 기본 형태를 찾으면 constructor에서 props와 state를 받아줍니다.
+
+특히나 state에서는 input에서 현재 작성중인 값인 value와 전체 리스트 값인 list를 만들어 줍니다.

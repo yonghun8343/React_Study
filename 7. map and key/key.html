@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <div id="root"></div>
+  </body>
+  <script
+    crossorigin
+    src="https://unpkg.com/react@18/umd/react.development.js"
+  ></script>
+  <script
+    crossorigin
+    src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+  ></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    const array = [1, 2, 3, 4, 5];
+    function ListItem(props) {
+      return <li>{props.value}</li>;
+    }
+
+    function NumberLists(props) {
+      const number = props.number;
+      return (
+        <ul>
+          {number.map((value, index) => {
+            return <ListItem key={index} value={value} />;
+          })}
+        </ul>
+      );
+    }
+
+    root.render(<NumberLists number={array} />);
+  </script>
+</html>
