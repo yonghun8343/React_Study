@@ -6,7 +6,7 @@
 
 우리는 예시로 아래의 두 컴포넌트를 만들어 봅시다.
 
-``` javascript
+```javascript
 function UserGreeting(props) {
   return <h1>Welcome back!</h1>;
 }
@@ -18,7 +18,7 @@ function GuestGreeting(props) {
 
 로그인을 한 상태에 따라서 렌더링을 하는 방법은 다음과 같습니다.
 
-``` javascript
+```javascript
 function Greeting(props) {
   const isLoggedIn = props.isLoggedIn;
   if (isLoggedIn) {
@@ -27,7 +27,7 @@ function Greeting(props) {
   return <GuestGreeting />;
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root')); 
+const root = ReactDOM.createRoot(document.getElementById("root"));
 // Try changing to isLoggedIn={true}:
 root.render(<Greeting isLoggedIn={false} />);
 ```
@@ -36,21 +36,31 @@ root.render(<Greeting isLoggedIn={false} />);
 
 이번 예시는 로그인 버튼과 로그아웃 버튼을 조건부 렌더링을 해 보려고 합니다.
 
-``` javascript
+위의 코드에서 Greeting 함수 밑에 아래의 코드를 넣어 주세요.
+
+```javascript
+function LoginButton(props) {
+  return <button onClick={props.onClick}>Login</button>;
+}
+
+function LogoutButton(props) {
+  return <button onClick={props.onClick}>Logout</button>;
+}
+
 class LoginControl extends React.Component {
   constructor(props) {
     super(props);
     this.handleLoginClick = this.handleLoginClick.bind(this);
     this.handleLogoutClick = this.handleLogoutClick.bind(this);
-    this.state = {isLoggedIn: false};
+    this.state = { isLoggedIn: false };
   }
 
   handleLoginClick() {
-    this.setState({isLoggedIn: true});
+    this.setState({ isLoggedIn: true });
   }
 
   handleLogoutClick() {
-    this.setState({isLoggedIn: false});
+    this.setState({ isLoggedIn: false });
   }
 
   render() {
@@ -71,7 +81,7 @@ class LoginControl extends React.Component {
   }
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root')); 
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<LoginControl />);
 ```
 
@@ -87,25 +97,23 @@ root.render(<LoginControl />);
 
 다음 예제를 해 봅시다.
 
-``` javascript
+```javascript
 function Mailbox(props) {
   const unreadMessages = props.unreadMessages;
   return (
     <div>
       <h1>Hello!</h1>
-      {unreadMessages.length > 0 &&
-        <h2>
-          You have {unreadMessages.length} unread messages.
-        </h2>
-      }
+      {unreadMessages.length > 0 && (
+        <h2>You have {unreadMessages.length} unread messages.</h2>
+      )}
     </div>
   );
 }
 
-const messages = ['React', 'Re: React', 'Re:Re: React'];
+const messages = ["React", "Re: React", "Re:Re: React"];
 // const messages = []
 
-const root = ReactDOM.createRoot(document.getElementById('root')); 
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<Mailbox unreadMessages={messages} />);
 ```
 
@@ -115,7 +123,7 @@ root.render(<Mailbox unreadMessages={messages} />);
 
 이번에는 주로 많이 쓰는 삼항연산자를 이용하여 조건부 렌더링을 구현 해 보려고 합니다.
 
-``` javascript
+```javascript
 // 이전의 LoginControl Class에 추가 해 봅니다.
 render() {
   const isLoggedIn = this.state.isLoggedIn;
@@ -129,7 +137,7 @@ render() {
 
 혹은 조금 더 큰 표현식에도 삼항연산자를 표현 할 수 있습니다.
 
-``` javascript
+```javascript
 render() {
   const isLoggedIn = this.state.isLoggedIn;
   return (

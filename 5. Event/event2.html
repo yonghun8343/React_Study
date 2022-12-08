@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <style>
+      .class1 {
+        color: red;
+      }
+    </style>
+  </head>
   <body>
     <div id="root"></div>
   </body>
@@ -29,7 +36,7 @@
 
       render() {
         return (
-          <button onClick={(e) => this.handleClick(1, 2)}>
+          <button className="class1" onClick={(e) => this.handleClick(1, 2)}>
             {this.state.isToggleOn ? "ON" : "OFF"}
           </button>
         );
