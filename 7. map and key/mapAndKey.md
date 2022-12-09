@@ -96,7 +96,7 @@ function ListItem(props) {
 function NumberLists(props) {
   const number = props.number;
   const listItem = number.map((value, index) => {
-    return <ListItem key={index} value="{value}" />;
+    return <ListItem key={index} value={value} />;
   });
 
   return <ul>{listItem}</ul>;
@@ -122,13 +122,58 @@ function NumberLists(props) {
   return (
     <ul>
       {number.map((value, index) => {
-        return <ListItem key={index} value="{value}" />;
+        return <ListItem key={index} value={value} />;
       })}
     </ul>
   );
 }
 
 root.render(<NumberLists number={array} />);
+```
+
+참고로 key값은 id와는 다르게 전체 코드에서 유일 할 필요는 없습니다.
+
+함수나 클래스 컴포넌트 안에서만 고유하면 됩니다!
+
+```javascript
+const root = ReactDOM.createRoot(document.getElementById("root"));
+const array = [1, 2, 3, 4, 5];
+
+function ListItem(props) {
+  return <li>{props.value}</li>;
+}
+
+function NumberLists(props) {
+  const number = props.number;
+  return (
+    <ul>
+      {number.map((value, index) => {
+        return <ListItem key={index} value={value} />;
+      })}
+    </ul>
+  );
+}
+function NumberLists2(props) {
+  const number = props.number;
+  return (
+    <ul>
+      {number.map((value, index) => {
+        return <ListItem key={index} value={value} />;
+      })}
+    </ul>
+  );
+}
+
+function AllLists(props) {
+  return (
+    <div>
+      <NumberLists number={array} />
+      <NumberLists2 number={array} />
+    </div>
+  );
+}
+
+root.render(<AllLists number={array} />);
 ```
 
 자 이제 우리는 리스트로 된 데이터를 화면에 빠르고 간단한 코드로 구현 할 수 있게 되었습니다.
