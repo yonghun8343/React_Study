@@ -16,10 +16,17 @@
     const root = ReactDOM.createRoot(document.getElementById("root"));
 
     function AddArea(props) {
+      const input = React.useRef(null);
+
+      const onButtonClick = () => {
+        input.current.value = "";
+      };
+      console.log(input);
       return (
         <div>
-          <input value={props.value} onChange={props.onChange} />
+          <input ref={input} value={props.value} onChange={props.onChange} />
           <button onClick={props.onClick}>추가</button>
+          <button onClick={onButtonClick}>초기화</button>
         </div>
       );
     }
@@ -48,52 +55,37 @@
       );
     }
 
-    class ListControl extends React.Component {
-      constructor(props) {
-        super(props);
-        this.state = {
-          list: [1, 2, 3],
-          value: "",
-        };
-      }
+    function ListControl(props) {
+      const [list, chnageList] = React.useState([1, 2, 3]);
+      const [value, changeValue] = React.useState("");
 
-      handleChange = (e) => {
-        this.setState({ value: e.target.value });
+      const handleChange = (e) => {
+        changeValue(e.target.value);
       };
 
-      handleInsert = () => {
-        this.setState({
-          // list: this.state.list.concat(this.state.value),
-          list: [...this.state.list, this.state.value],
-          value: "",
-        });
+      const handleInsert = () => {
+        chnageList([...list, value]);
+        changeValue("");
       };
 
-      handleRemove = (index) => {
-        const lists = this.state.list;
-        this.setState({
-          list: [
-            ...lists.slice(0, index),
-            ...lists.slice(index + 1, lists.length),
-          ],
-        });
+      const handleRemove = (index) => {
+        const lists = list;
+        chnageList([
+          ...lists.slice(0, index),
+          ...lists.slice(index + 1, lists.length),
+        ]);
       };
 
-      render() {
-        return (
-          <React.Fragment>
-            <AddArea
-              value={this.state.value}
-              onChange={this.handleChange}
-              onClick={this.handleInsert}
-            />
-            <TextLists
-              items={this.state.list}
-              onDoubleClick={this.handleRemove}
-            />
-          </React.Fragment>
-        );
-      }
+      return (
+        <React.Fragment>
+          <AddArea
+            value={value}
+            onChange={handleChange}
+            onClick={handleInsert}
+          />
+          <TextLists items={list} onDoubleClick={handleRemove} />
+        </React.Fragment>
+      );
     }
 
     root.render(<ListControl />);

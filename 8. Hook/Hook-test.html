@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <div id="root"></div>
+  </body>
+  <script
+    crossorigin
+    src="https://unpkg.com/react@18/umd/react.development.js"
+  ></script>
+  <script
+    crossorigin
+    src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+  ></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+
+    function AddArea(props) {
+      React.useEffect(() => {
+        console.log("렌더 & 업데이트가 되었을 때");
+
+        return function funcName() {
+          console.log("언마운트 되었을 때");
+        };
+      });
+
+      return (
+        <div>
+          <input value={props.value} onChange={props.onChange} />
+          <button onClick={props.onClick}>추가</button>
+        </div>
+      );
+    }
+
+    function ListItem(props) {
+      return <li onDoubleClick={props.onDoubleClick}>{props.value}</li>;
+    }
+
+    // class AddArea extends React.Component {
+    //   constructor(props) {
+    //     super(props);
+    //   }
+
+    //   componentDidMount() {
+    //     console.log("렌더가 되었을 때");
+    //   }
+
+    //   componentDidUpdate() {
+    //     console.log("업데이트가 되었을 때");
+    //   }
+
+    //   componentWillUnmount() {
+    //     console.log("언마운트 되었을 때");
+    //   }
+
+    //   render() {
+    //     return (
+    //       <div>
+    //         <input value={this.props.value} onChange={this.props.onChange} />
+    //         <button onClick={this.props.onClick}>추가</button>
+    //       </div>
+    //     );
+    //   }
+    // }
+
+    function TextLists(props) {
+      const items = props.items;
+      return (
+        <ul>
+          {items.map((value, index) => {
+            return (
+              <ListItem
+                key={index}
+                value={value}
+                onDoubleClick={() => {
+                  props.onDoubleClick(index);
+                }}
+              >
+                {value}
+              </ListItem>
+            );
+          })}
+        </ul>
+      );
+    }
+
+    class ListControl extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          list: [1, 2, 3],
+          value: "",
+        };
+      }
+
+      // componentDidMount() {
+      //   console.log("렌더가 되었을 때");
+      // }
+
+      // componentDidUpdate() {
+      //   console.log("업데이트가 되었을 때");
+      // }
+
+      // componentWillUnmount() {
+      //   console.log("언마운트 되었을 때");
+      // }
+
+      handleChange = (e) => {
+        this.setState({ value: e.target.value });
+      };
+
+      handleInsert = () => {
+        this.setState({
+          // list: this.state.list.concat(this.state.value),
+          list: [...this.state.list, this.state.value],
+          value: "",
+        });
+      };
+
+      handleRemove = (index) => {
+        const lists = this.state.list;
+        this.setState({
+          list: [
+            ...lists.slice(0, index),
+            ...lists.slice(index + 1, lists.length),
+          ],
+        });
+      };
+
+      render() {
+        console.log(this.state.list);
+        if (this.state.list.length === 0) {
+          console.log();
+        }
+        return (
+          <React.Fragment>
+            {this.state.list.length !== 0 && (
+              <AddArea
+                value={this.state.value}
+                onChange={this.handleChange}
+                onClick={this.handleInsert}
+              />
+            )}
+            <TextLists
+              items={this.state.list}
+              onDoubleClick={this.handleRemove}
+            />
+          </React.Fragment>
+        );
+      }
+    }
+
+    // function ListControl(props) {
+    //   const [list, chnageList] = React.useState([1, 2, 3]);
+    //   const [value, chnageValue] = React.useState("");
+
+    //   React.useEffect(() => {
+    //     document.title = `Hi ${value} ${list}`;
+    //     const id = setInterval(() => {
+    //       console.log(`tick ${value}`);
+    //     }, 1000);
+
+    //     return function clear() {
+    //       clearInterval(id);
+    //     };
+    //   }, [value]);
+
+    //   const handleChange = (e) => {
+    //     chnageValue(e.target.value);
+    //   };
+
+    //   const handleInsert = () => {
+    //     chnageList([...list, value]);
+    //     chnageValue("");
+    //   };
+
+    //   const handleRemove = (index) => {
+    //     const lists = list;
+    //     chnageList([
+    //       ...lists.slice(0, index),
+    //       ...lists.slice(index + 1, lists.length),
+    //     ]);
+    //   };
+
+    //   return (
+    //     <React.Fragment>
+    //       <AddArea
+    //         value={value}
+    //         onChange={handleChange}
+    //         onClick={handleInsert}
+    //       />
+    //       <TextLists items={list} onDoubleClick={handleRemove} />
+    //     </React.Fragment>
+    //   );
+    // }
+
+    root.render(<ListControl />);
+  </script>
+</html>

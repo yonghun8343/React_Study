@@ -34,66 +34,62 @@
         <ul>
           {items.map((value, index) => {
             return (
-              <li
+              <ListItem
                 key={index}
+                value={value}
                 onDoubleClick={() => {
                   props.onDoubleClick(index);
                 }}
               >
                 {value}
-              </li>
+              </ListItem>
             );
           })}
         </ul>
       );
     }
 
-    class ListControl extends React.Component {
-      constructor(props) {
-        super(props);
-        this.state = {
-          list: [1, 2, 3],
-          value: "",
+    function ListControl(props) {
+      const [list, chnageList] = React.useState([1, 2, 3]);
+      const [value, chnageValue] = React.useState("");
+
+      React.useEffect(() => {
+        const id = setInterval(() => {
+          console.log(`tick ${value}`);
+        }, 1000);
+
+        return function clear() {
+          clearInterval(id);
         };
-      }
+      }, [value]);
 
-      handleChange = (e) => {
-        this.setState({ value: e.target.value });
+      const handleChange = (e) => {
+        chnageValue(e.target.value);
       };
 
-      handleInsert = () => {
-        this.setState({
-          // list: this.state.list.concat(this.state.value),
-          list: [...this.state.list, this.state.value],
-          value: "",
-        });
+      const handleInsert = () => {
+        chnageList([...list, value]);
+        chnageValue("");
       };
 
-      handleRemove = (index) => {
-        const lists = this.state.list;
-        this.setState({
-          list: [
-            ...lists.slice(0, index),
-            ...lists.slice(index + 1, lists.length),
-          ],
-        });
+      const handleRemove = (index) => {
+        const lists = list;
+        chnageList([
+          ...lists.slice(0, index),
+          ...lists.slice(index + 1, lists.length),
+        ]);
       };
 
-      render() {
-        return (
-          <React.Fragment>
-            <AddArea
-              value={this.state.value}
-              onChange={this.handleChange}
-              onClick={this.handleInsert}
-            />
-            <TextLists
-              items={this.state.list}
-              onDoubleClick={this.handleRemove}
-            />
-          </React.Fragment>
-        );
-      }
+      return (
+        <React.Fragment>
+          <AddArea
+            value={value}
+            onChange={handleChange}
+            onClick={handleInsert}
+          />
+          <TextLists items={list} onDoubleClick={handleRemove} />
+        </React.Fragment>
+      );
     }
 
     root.render(<ListControl />);
