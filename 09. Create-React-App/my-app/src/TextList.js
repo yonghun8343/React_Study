@@ -5,7 +5,7 @@ function TextList(props) {
         return (
           <li key={index}>
             <span>{`이름 : ${value.name}, 상태 : ${
-              !value.status ? "로그인" : "로그아웃"
+              !value.status ? "로그아웃" : "로그인"
             }`}</span>
             {!value.status ? (
               <button
@@ -13,7 +13,7 @@ function TextList(props) {
                   props.reStatus(index);
                 }}
               >
-                로그아웃 시키기
+                로그인 시키기
               </button>
             ) : (
               <button
@@ -21,7 +21,7 @@ function TextList(props) {
                   props.reStatus(index);
                 }}
               >
-                로그인 시키기
+                로그아웃 시키기
               </button>
             )}
           </li>

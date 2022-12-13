@@ -7,7 +7,11 @@ function Post({ setIsLoading }) {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .post(`https://jsonplaceholder.typicode.com/todos/1`)
+      .post(`https://jsonplaceholder.typicode.com/posts`, {
+        title: "123",
+        body: "123",
+        userId: 1,
+      })
       .then((res) => setData(res.data))
       .then(() => setIsLoading(false));
   }, []);

@@ -36,7 +36,7 @@ function App(props) {
   const [value, changeValue] = useState("");
 
   const addUser = () => {
-    changeUsers([...users, { id: user.length, name: value, status: "online" }]);
+    changeUsers([...users, { id: users.length, name: value, status: true }]);
     changeValue("");
   };
 
