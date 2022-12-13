@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 
-function Error({ setIsLoading }) {
+function Error({ isLoading, setIsLoading }) {
   const [data, setData] = useState();
   useEffect(() => {
     setIsLoading(true);
@@ -15,11 +15,16 @@ function Error({ setIsLoading }) {
         setIsLoading(false);
         setData(err.response.status);
       });
+
+    return () => {
+      setIsLoading(false);
+    };
   }, []);
-  return <div>{`${JSON.stringify(data)}`}</div>;
+  return <div>{!isLoading && `${JSON.stringify(data)}`}</div>;
 }
 
 Error.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
   setIsLoading: PropTypes.func.isRequired,
 };
 

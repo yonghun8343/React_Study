@@ -22,19 +22,19 @@ function App() {
   const getComponent = () => {
     switch (state) {
       case "GET":
-        return <Get setIsLoading={setIsLoading} />;
+        return <Get isLoading={isLoading} setIsLoading={setIsLoading} />;
 
       case "POST":
-        return <Post setIsLoading={setIsLoading} />;
+        return <Post isLoading={isLoading} setIsLoading={setIsLoading} />;
 
       case "PUT":
-        return <Put setIsLoading={setIsLoading} />;
+        return <Put isLoading={isLoading} setIsLoading={setIsLoading} />;
 
       case "DELETE":
-        return <Delete setIsLoading={setIsLoading} />;
+        return <Delete isLoading={isLoading} setIsLoading={setIsLoading} />;
 
       case "ERROR":
-        return <Error setIsLoading={setIsLoading} />;
+        return <Error isLoading={isLoading} setIsLoading={setIsLoading} />;
 
       case "default":
         return false;
@@ -46,9 +46,8 @@ function App() {
   };
 
   const memo = useMemo(() => {
-    console.log("??");
     return getComponent();
-  }, [state]);
+  }, [state, isLoading]);
 
   return (
     <>

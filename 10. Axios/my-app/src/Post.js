@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 
-function Post({ setIsLoading }) {
+function Post({ isLoading, setIsLoading }) {
   const [data, setData] = useState();
   useEffect(() => {
     setIsLoading(true);
+    console.log(isLoading);
     axios
       .post(`https://jsonplaceholder.typicode.com/posts`, {
         title: "123",
@@ -14,11 +15,17 @@ function Post({ setIsLoading }) {
       })
       .then((res) => setData(res.data))
       .then(() => setIsLoading(false));
+
+    return () => {
+      setIsLoading(false);
+    };
   }, []);
-  return <div>{`${JSON.stringify(data)}`}</div>;
+  console.log(isLoading);
+  return <div>{!isLoading && `${JSON.stringify(data)}`}</div>;
 }
 
 Post.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
   setIsLoading: PropTypes.func.isRequired,
 };
 
