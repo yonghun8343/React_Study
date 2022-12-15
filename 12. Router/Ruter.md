@@ -42,6 +42,14 @@ CSS는 github에 있는 코드를 참고 해 주세요.
 
 하나하나 만들어보면서 진행 해 봅시다.
 
+진행하기 전에 CSS파일부터 넣어 보겠습니다.
+
+아래의 링크에 있는 코드를 index.css에 넣어주세요.
+
+[CSS 확인 하러 가기](https://gist.githubusercontent.com/ryanflorence/ba20d473ef59e1965543fa013ae4163f/raw/499707f25a5690d490c7b3d54c65c65eb895930c/react-router-6.4-tutorial-css.css)
+
+> src/index.css
+
 ### 기본 라우터 만들기
 
 라우터에 따라서 jsx가 렌더링이 된다고 하였습니다! 기본적으로 설정 할 수 있는 라우터를 추가 해 봅시다.
