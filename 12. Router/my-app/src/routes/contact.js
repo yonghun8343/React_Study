@@ -1,16 +1,16 @@
-import { Form } from "react-router-dom";
+import { Form, useLoaderData, useParams } from "react-router-dom";
 import React from "react";
 import Favorite from "./favorite";
+import { getContact } from "../contacts";
+
+export async function loader({ params }) {
+  return getContact(params.contactId);
+}
 
 function Contact() {
-  const contact = {
-    first: "Your",
-    last: "Name",
-    avatar: "https://placekitten.com/g/200/200",
-    twitter: "your_handle",
-    notes: "Some notes",
-    favorite: true,
-  };
+  const contact = useLoaderData();
+  const param = useParams();
+  console.log(param);
 
   return (
     <div id="contact">
