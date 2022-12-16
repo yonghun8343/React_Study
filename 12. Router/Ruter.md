@@ -1059,15 +1059,7 @@ export default function Root() {
 > src/routes/contact.js
 
 ```javascript
-<Form
-  method="post"
-  action="destroy"
-  onSubmit={(event) => {
-    if (!confirm("Please confirm you want to delete this record.")) {
-      event.preventDefault();
-    }
-  }}
->
+<Form method="post" action="destroy">
   <button type="submit">Delete</button>
 </Form>
 ```
@@ -1127,7 +1119,7 @@ export default function Index() {
     <p id="zero-state">
       This is a demo for React Router.
       <br />
-      Check out{" "}
+      Check out
       <a href="https://reactrouter.com">the docs at reactrouter.com</a>.
     </p>
   );
