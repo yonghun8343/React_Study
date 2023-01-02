@@ -1,14 +1,25 @@
 # Props
 
-여러분들이 HTML을 할 때 태그 안에 별도의 값을 넣어 이를 받아 JS에서 처리하고 싶다는 생각을 해 보신 적이 있을 것 입니다.
+Props는 React에서 부모 컴포넌트에서 자식 컴포넌트로 데이터를 전달 할 때 사용합니다.
 
-Props는 Properties의 줄임말입니다.
+처음 보는 단어인 Component와 앞으로 알아야 할 용어 Elemenmt 단어에 대해서 숙지하려 합니다.
+
+- Element
+  - 엘리먼트는 React 앱의 가장 작은 단위로 화면에 표시할 내용을 기술합니다.
+- Component
+  - JavaScript 함수를 작성해 Element를 구현하고, UI를 재사용 가능한 개별적인 여러 조각으로 나는 것 중 하나
+- Element와 Component 관계
+  - ![Element와 Component 관계](./%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8%2C%20%EC%97%98%EB%A6%AC%EB%A8%BC%ED%8A%B8.png)
+
+---
+
+Props는 Properties의 줄임말로 아까 설명 했듯이 부모 컴포넌트에서 자식 컴포넌트로 데이터를 전달 할 때 사용합니다.
 
 우선 아래의 코드를 작성 해 봅시다.
 
 > props.html
 
-```
+```html
 <!DOCTYPE html>
 <html lang="en">
   <body>
@@ -25,14 +36,14 @@ Props는 Properties의 줄임말입니다.
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
     const root = ReactDOM.createRoot(document.getElementById("root"));
-    function H1(props) {
+    function Hello(props) {
       return <h1>Hello, {props.name}!</h1>;
     }
 
     function tick() {
       const element = (
         <div>
-          <H1 name="대한민국" />
+          <Hello name="대한민국" />
           <h2>It is {new Date().toLocaleTimeString()}.</h2>
         </div>
       );
@@ -48,9 +59,9 @@ Props는 Properties의 줄임말입니다.
 
 1. tick 함수내에서 element 변수 내에 선언된 것으로 root.render()를 호출합니다.
 
-2. React는 {name: '대한민국'}를 props로 하여 H1컴포넌트를 호출 합니다.
+2. React는 {name: '대한민국'}를 props로 하여 Hello컴포넌트를 호출 합니다.
 
-3. H1 컴포넌트는 결과적으로 `<h1>Hello, 대한민국</h1>` 엘리먼트를 반환합니다.
+3. Hello 컴포넌트는 결과적으로 `<h1>Hello, 대한민국</h1>` 엘리먼트를 반환합니다.
 
 4. React Dom은 `<h1>Hello, 대한민국</h1>` 엘리먼트와 일치하도록 DOM을 효율적으로 업데이트 합니다.
 
@@ -62,7 +73,7 @@ props-exp1.html고 아래의 내용을 넣어 봅시다.
 
 > props-exp1.html
 
-```
+```html
 <!DOCTYPE html>
 <html lang="en">
   <body>
@@ -83,9 +94,9 @@ props-exp1.html고 아래의 내용을 넣어 봅시다.
     function Comment(props) {
       return (
         <div className="Comment">
-          <div className="UserInfo">
-            <h1 className="work">{props.author.work}</h1>
-            <h2 className="UserInfo-name">{props.author.name}</h2>
+          <div className="Info">
+            <h1 className="Info-file">{props.class.file}</h1>
+            <h2 className="Info-name">{props.class.name}</h2>
           </div>
           <div className="Comment-text">{props.text}</div>
           <div className="Comment-date">{formatDate(props.date)}</div>
@@ -96,9 +107,9 @@ props-exp1.html고 아래의 내용을 넣어 봅시다.
     const comment = {
       date: new Date(),
       text: "리액트 Props 테스트 입니다.",
-      author: {
-        name: "hun",
-        work: "효성직업전문학원",
+      class: {
+        name: "01. JSX",
+        file: "props-exp1.html",
       },
     };
 
@@ -107,23 +118,19 @@ props-exp1.html고 아래의 내용을 넣어 봅시다.
     }
 
     root.render(
-      <Comment
-        date={comment.date}
-        text={comment.text}
-        author={comment.author}
-      />
+      <Comment date={comment.date} text={comment.text} class={comment.class} />
     );
   </script>
 </html>
 ```
 
-이 코드에서 userInfo의 코드를 컴포넌트로 묶어서 표현 하는 것을 props-exp2.html에서 작업 해 봅시다.
+이 코드에서 클래스 Info 코드를 컴포넌트로 묶어서 표현 하는 것을 props-exp2.html에서 작업 해 봅시다.
 
 우선 코드를 아래와 같이 입력 해 줍니다.
 
 > props-exp2.html
 
-```
+```html
 <!DOCTYPE html>
 <html lang="en">
   <body>
@@ -141,11 +148,11 @@ props-exp1.html고 아래의 내용을 넣어 봅시다.
   <script type="text/babel">
     const root = ReactDOM.createRoot(document.getElementById("root"));
 
-    function Userinfo(props) {
+    function Info(props) {
       return (
-        <div className="UserInfo">
-          <h1 className="work">효성직업전문학원</h1>
-          <h2 className="UserInfo-name">hun</h2>
+        <div className="Info">
+          <h1 className="Info-file">props-exp1.html</h1>
+          <h2 className="Info-name">01. JSX</h2>
         </div>
       );
     }
@@ -164,9 +171,7 @@ props-exp1.html고 아래의 내용을 넣어 봅시다.
       return date.toLocaleDateString();
     }
 
-    root.render(
-      <Comment/>
-    );
+    root.render(<Comment />);
   </script>
 </html>
 ```
