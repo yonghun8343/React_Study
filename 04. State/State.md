@@ -154,7 +154,7 @@ const [v1, v2] = data;
 
 그러므로 우리는 state를 바꾸기 전에 우리가 지금 data를 넣은 부분은 Span이라는 변수 명을 가진 함수 안에서 사용하고 있습니다. 그러므로 밖의 function에서는 동작하기 힘들기 때문에 코드를 일부 수정 해 주려고 합니다.
 
-> > state.html
+> state.html
 
 ```javascript
 const root = document.getElementById("root");

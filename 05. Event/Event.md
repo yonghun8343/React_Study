@@ -7,7 +7,7 @@ React의 엘리먼트에서 이벤트를 처리하는 방법은 기본적으로 
 
 예를들어 HTML과 리액트의 이벤트를 선언하는 방법은 아래와 같습니다.
 
-``` javascript
+```javascript
 // HTML
 <button onclick="activateLasers()">
   Activate Lasers
@@ -23,26 +23,26 @@ React의 엘리먼트에서 이벤트를 처리하는 방법은 기본적으로 
 
 이전에 했던 state-class.html의 파일을 불러와 함수부분에 아래와 같이 넣어 줍니다.
 
-``` javascript
+```javascript
 class Toggle extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {isToggleOn: true};
+    this.state = { isToggleOn: true };
 
     // 콜백에서 `this`가 작동하려면 아래와 같이 바인딩 해주어야 합니다.
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick() {
-    this.setState(prevState => ({
-      isToggleOn: !prevState.isToggleOn
+    this.setState((prevState) => ({
+      isToggleOn: !prevState.isToggleOn,
     }));
   }
 
   render() {
     return (
       <button onClick={this.handleClick}>
-        {this.state.isToggleOn ? 'ON' : 'OFF'}
+        {this.state.isToggleOn ? "ON" : "OFF"}
       </button>
     );
   }
@@ -72,16 +72,13 @@ class LoggingButton extends React.Component {
   // 이 문법은 `this`가 handleClick 내에서 바인딩되도록 합니다.
   // 주의: 이 문법은 *실험적인* 문법입니다.
   // 하지만 우리의 Babel이 이를 안정적으로 변환 해 줍니다.
-  handleClick = () => { // 여기서 변수 안에 함수를 넣음
-    console.log('this is:', this);
+  handleClick = () => {
+    // 여기서 변수 안에 함수를 넣음
+    console.log("this is:", this);
   };
 
   render() {
-    return (
-      <button onClick={this.handleClick}>
-        Click me
-      </button>
-    );
+    return <button onClick={this.handleClick}>Click me</button>;
   }
 }
 ```
@@ -93,7 +90,7 @@ prototype이라는 것은 클래스에 속한 함수가 어떤것이 있는지�
 확인 하는 방법은 다음과 같습니다.
 
 ```javascript
-클래스명.prototype
+클래스명.prototype;
 ```
 
 이제 우리가 Toggle과 LoggingButton의 prototype를 확인 해 봅시다.
@@ -108,7 +105,7 @@ prototype이라는 것은 클래스에 속한 함수가 어떤것이 있는지�
 
 그러면 이제 함수에 파라미터를 전달 하는 방법을 해 보려고 합니다.
 
-``` javascript
+```javascript
 class Toggle extends React.Component {
   constructor(props) {
     super(props);
