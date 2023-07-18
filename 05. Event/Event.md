@@ -102,33 +102,3 @@ prototype이라는 것은 클래스에 속한 함수가 어떤것이 있는지�
 그렇다면 정상적인 사용방법은 Toggle처럼 사용하는것이 옳지 않을까? 라고 생각 할 수 있지만 개발자는 LoggingButton과 같이 사용하고 추후 이런 방식으로 사용 할 수 있도록 개선이 될 확률이 높습니다.
 
 그러므로 LoggingButton처럼 사용하면 된다고 생각 해 주시면 됩니다.
-
-그러면 이제 함수에 파라미터를 전달 하는 방법을 해 보려고 합니다.
-
-```javascript
-class Toggle extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { isToggleOn: true };
-  }
-
-  handleClick = (v1, v2) => {
-    console.log(v1, v2);
-    this.setState((prevState) => ({
-      isToggleOn: !prevState.isToggleOn,
-    }));
-  };
-
-  render() {
-    return (
-      <button onClick={(e) => this.handleClick(1, 2)}>
-        {this.state.isToggleOn ? "ON" : "OFF"}
-      </button>
-    );
-  }
-}
-```
-
-여기에서 handleClick에서 파라미터를 두개 받고 이를 전달해 주는 방법으로는 onClick에서 콜백으로 변수를 받고 안에 함수 내부에서 별도의 함수 파라미터를 전달하는 것이 하나의 방법입니다.
-
-그 이외의 방법이 한가지가 더 있지만 지금 현재 보다 더 까다롭거나 어렵기 때문에 현재 제가 소개해 드린 방법까지만 숙지 하셔도 작업 하시는데에는 큰 무리가 없습니다.
