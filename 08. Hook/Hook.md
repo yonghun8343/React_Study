@@ -272,7 +272,7 @@ JSX는 기존과 그대로 사용하면 되지만 Class에서 써야했던 const
 useEffect는 기본형은 다음과 같습니다.
 
 ```javascript
-useEffect는(() => {
+useEffect(() => {
   console.log("렌더 & 업데이트가 되었을 때");
 
   return function 함수명() {
