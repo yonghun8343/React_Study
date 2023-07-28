@@ -488,7 +488,7 @@ ractrouter.com에서 이후에 나오는 tutorial은 가짜 통신을 이용하�
 
 우선 /src/contacts.js를 만들어 주시고, 아래의 코드를 넣어 주세요.
 
-> src/contact.js
+> src/contacts.js
 
 ```javascript
 /* eslint-disable no-use-before-define */
